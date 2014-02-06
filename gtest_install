@@ -1,0 +1,18 @@
+#!/bin/bash
+
+version=gtest-1.7.0
+root=/usr/local
+
+sudo apt-get install cmake
+
+wget https://googletest.googlecode.com/files/$version.zip -P ~
+(cd ~; unzip ${version}.zip;)
+
+(cd ~/$version; cmake .; make;)
+
+sudo mkdir -p "$root/$version/lib"
+sudo cp -r ~/$version/include "$root/$version/"
+sudo cp ~/$version/libgtest*.a "$root/$version/lib"
+sudo ln -s "$root/$version" "$root/gtest"
+
+#rm -rf ~/$version*
