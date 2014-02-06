@@ -1,6 +1,13 @@
 #!/bin/bash
 #app, lib, testの各サブディレクトリのルール記述したMakefileを生成するスクリプト
-#Usage : $0 [-nh] [app|lib|test] [target_directory]
+#Usage : mkRules [app|lib|test] [target_directory]
+#
+#新たにlib/fooディレクトリを生成し,実行ファイル用のRules.mkを生成する場合
+#./mkRules app app/foo
+#新たにlib/barディレクトリを生成し,ライブラリ用のRules.mkを生成する場合
+#./mkRules lib lib/bar
+#新たにlib/hogeディレクトリを生成し,テスト用のRules.mkを生成する場合
+#./mkRules test test/hoge
 
 template_header(){
 local path="$1/$2"
@@ -75,40 +82,21 @@ template_gtest $dir $name
 }
 
 usage_exit(){
-	echo "Usage : $0 [-nh] [app|lib|test] [target_directory]"
+	echo "Usage : $0 [app|lib|test] [target_directory]"
 	exit 1
 }
 
-check_dir(){
-if [ ! -d $1 ]; then
-	echo "$1 is not directory."
+if [ $# -ne 2 ]; then
+	usage_exit
 	exit 1
 fi
-}
-
-new="false"
-while getopts nh opt
-do
-	case $opt in
-		n) new="true"
-			;;
-		h) usage_exit
-			;;
-		\?) usage_exit
-	esac
-done
-shift $((OPTIND - 1))
 
 dir=`echo $2 | sed "s/\/$//"`
-if [ "$new" = "true" ]; then
-	if [ ! -e $dir ]; then
-		mkdir -p $dir
-	else
-		echo "$dir is already exist."	
-		exit 1
-	fi
-else 
-	check_dir $dir
+if [ ! -e $dir ]; then
+	mkdir -p $dir
+else
+	echo "$dir is already exist."	
+	exit 1
 fi
 
 case $1 in
