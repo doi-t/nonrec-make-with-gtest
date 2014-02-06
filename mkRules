@@ -1,0 +1,123 @@
+#!/bin/bash
+#app, lib, testの各サブディレクトリのルール記述したMakefileを生成するスクリプト
+#Usage : $0 [-nh] [app|lib|test] [target_directory]
+
+template_header(){
+local path="$1/$2"
+cat > "$path.h" <<- EOF
+	#ifndef ___$path	
+	#define ___$path
+
+
+
+	#endif //___$path
+EOF
+}
+
+template_src(){
+local path="$1/$2"
+cat > "$path.cc" <<- EOF
+	#include "$path.h"
+EOF
+}
+
+template_gtest(){
+local path="$1/$2"
+cat > "$path.cc" <<- EOF
+	#include "gtest/gtest.h"
+	#include "$path.h"
+EOF
+}
+
+output="Rules.mk"
+
+execRules(){
+local dir=$1
+local name=$2
+cat > "$dir/$output" <<- EOF
+	exec-binary-name := $name
+	dependent-libraries := 
+	local_src := \$(wildcard \$(subdirectory)/*.cc)
+
+	\$(eval \$(call make-exec-binary, \$(subdirectory)/\$(exec-binary-name), \$(local_src), \$(dependent-libraries)))
+EOF
+
+template_header $dir $name
+template_src $dir $name
+}
+
+libRules(){
+local dir=$1
+local name=$2
+cat > "$dir/$output" <<- EOF 
+	library-name := lib$name.a
+	local_src := \$(wildcard \$(subdirectory)/*.cc)
+
+	\$(eval \$(call make-library, \$(subdirectory)/\$(library-name), \$(local_src)))
+EOF
+
+template_header $dir $name
+template_src $dir $name
+}
+
+testRules(){
+local dir=$1
+local name=$2
+cat > "$dir/$output" <<- EOF 
+	local_test_suites := test_$name
+	target_libraries := lib/$name/lib$name.a
+	local_src := \$(wildcard \$(subdirectory)/*.cc)
+
+	\$(eval \$(call make-test, \$(subdirectory)/\$(local_test_suites), \$(local_src), \$(target_libraries)))
+EOF
+
+template_gtest $dir $name
+}
+
+usage_exit(){
+	echo "Usage : $0 [-nh] [app|lib|test] [target_directory]"
+	exit 1
+}
+
+check_dir(){
+if [ ! -d $1 ]; then
+	echo "$1 is not directory."
+	exit 1
+fi
+}
+
+new="false"
+while getopts nh opt
+do
+	case $opt in
+		n) new="true"
+			;;
+		h) usage_exit
+			;;
+		\?) usage_exit
+	esac
+done
+shift $((OPTIND - 1))
+
+dir=`echo $2 | sed "s/\/$//"`
+if [ "$new" = "true" ]; then
+	if [ ! -e $dir ]; then
+		mkdir -p $dir
+	else
+		echo "$dir is already exist."	
+		exit 1
+	fi
+else 
+	check_dir $dir
+fi
+
+case $1 in
+	app) appRules $dir `basename $dir`
+		;;
+	lib) libRules $dir `basename $dir`
+		;;
+	test) testRules $dir `basename $dir`
+		;;
+	*) usage_exit
+		;;
+esac
