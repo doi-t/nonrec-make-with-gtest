@@ -11,28 +11,31 @@
 
 template_header(){
 local path="$1/$2"
+local name="`basename $1`/$2"
 cat > "$path.h" <<- EOF
-	#ifndef ___$path	
-	#define ___$path
+	#ifndef ___$name	
+	#define ___$name
 
 
 
-	#endif //___$path
+	#endif //___$name
 EOF
 }
 
 template_src(){
 local path="$1/$2"
+local name="`basename $1`/$2"
 cat > "$path.cc" <<- EOF
-	#include "$path.h"
+	#include "$name.h"
 EOF
 }
 
 template_gtest(){
 local path="$1/$2"
+local name="`basename $1`/$2"
 cat > "$path.cc" <<- EOF
 	#include "gtest/gtest.h"
-	#include "$path.h"
+	#include "$name.h"
 EOF
 }
 
