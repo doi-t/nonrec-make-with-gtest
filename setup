@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mkdir "app" "lib" "test"
+mkdir "./bin" "./lib" "./test"

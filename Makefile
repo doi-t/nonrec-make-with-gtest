@@ -43,7 +43,7 @@ test_suites	:=
 objects			= $(call source-to-object, $(sources))
 dependencies	= $(subst .o,.d,$(objects))
 
-include_dirs	:=	./lib ./app ./test
+include_dirs	:=	./lib ./bin ./test
 CPPFLAGS		+=	$(addprefix -I ,$(include_dirs))
 vpath %.h $(include_dirs)
 
