@@ -3,6 +3,11 @@
 version=gtest-1.7.0
 root=/usr/local
 
+if [ -e "$root/gtest" ]; then
+	echo "googletest - OK!!"
+	exit 0
+fi
+
 sudo apt-get install cmake
 
 wget https://googletest.googlecode.com/files/$version.zip -P ~
