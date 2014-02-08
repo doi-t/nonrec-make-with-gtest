@@ -77,7 +77,7 @@ include $(addsuffix /Rules.mk,$(Rules))
 
 ### Rules
 .PHONY: all
-all: $(programs) libraries
+all: $(programs)
 
 .PHONY: test
 test: $(test_suites)
