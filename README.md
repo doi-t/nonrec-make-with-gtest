@@ -13,6 +13,14 @@ non-recursive make with googletest for TDD
 
 **RED -> GREEN -> refactoring**
 
+## とりあえずサンプルのビルドを試してみる
+
+```sh
+make setup_gtest
+make test
+make
+```
+
 ## 使い方
 
 ソースツリーは、Makefileの仕様に従って、厳密に管理する必要があるため、以下の手順でサブディレクトリおよびソースファイルの追加を行います。
@@ -75,11 +83,11 @@ Makefileにセットアップ用のシェルスクリプトを呼び出すコマ
 
 例:
 
-	./mkRules bin bin/sample
+	./mkRules -b sample   #Rules.mkを含むsampleという名前のサブディレクトリをbinディレクトリ以下に生成
 
-	./mkRules lib lib/add
+	./mkRules -l add   #Rules.mkを含むaddという名前のサブディレクトリをlibディレクトリ以下に生成
 
-	./mkRules test test/add
+	./mkRules -t add   #Rules.mkを含むaddという名前のサブディレクトリをtestディレクトリ以下に生成
 
 ## ソースツリーの管理
 
@@ -97,15 +105,15 @@ bin, lib, testの３つのディレクトリを全て削除して、再度生成
 
 mkRulesはサブディレクトリの管理するRules.mkの雛形を生成するスクリプトです。
 
-生成されるRules.mkは第1引数で指定した種類(実行バイナリ(bin), ライブラリ(lib), テスト(test))毎に異なります。
+Rules.mkを生成する際は、目的に応じて必須オプション(-b:実行バイナリ(bin), -l:ライブラリ(lib), -t:テスト(test))を指定します。
 
-第2数で生成するサブディレクトリの名前をパスで指定します。パスは必ず以下のサンプルの様にbin,lib,testから始まるパスを指定します。
+必須オプションに続いてサブディレクトリの名前を指定します。サブディレクトリ名の指定も必須です。
 
 例えば、新たにsampleという名前のディレクトリに実行バイナリを追加する場合は、
 
-	./mkRules.mk bin bin/sample
+	./mkRules.mk -b sample
 
-実行すると以下のようになります。Rules.mkと一緒にサブディレクトリと同名のテンプレートも生成します(必ずこのテンプレートを使わなければならないわけではありません)。
+実行するとソースツリーが以下のようになります。Rules.mkと一緒にサブディレクトリと同名のテンプレート(sample.cc, sample.h)も生成します(必ずこのテンプレートを使わなければならないわけではありません)。
 
 ```
 nonrec-make-with-gtest/
@@ -123,7 +131,7 @@ addというサブディレクトリ名のライブラリとテストを追加�
 
 ライブラリの場合
 
-	./mkRules.mk lib lib/add
+	./mkRules.mk -l add
 
 実行結果
 
@@ -139,7 +147,7 @@ nonrec-make-with-gtest/
 
 テストの場合
 
-	./mkRules.mk test test/add
+	./mkRules.mk -t add
 
 実行結果
 

@@ -85,16 +85,35 @@ template_gtest $dir $name
 }
 
 usage_exit(){
-	echo "Usage : $0 [bin|lib|test] [target_directory]"
+	echo "Usage : $0 -blt name"
+	echo "-b(bin), -l(lib), -t(test)"
+	echo "example:"
+	echo "$0 -b foo"
+	echo "$0 -l bar"
+	echo "$0 -t hoge"
 	exit 1
 }
 
-if [ $# -ne 2 ]; then
-	usage_exit
-	exit 1
-fi
+flag="false"
+while getopts b:l:t:h opt
+do
+flag="true"
+name="$OPTARG"
+	case $opt in
+	b)	mode="bin"
+		dir="bin/$OPTARG" ;;
+	l)	mode="lib"
+		dir="lib/$OPTARG" ;;
+	t)	mode="test"
+		dir="test/$OPTARG" ;;
+	\?)
+		usage_exit ;;
+	esac
+done
+shift $((OPTIND - 1))
 
-dir=`echo $2 | sed "s/\/$//"`
+[ $flag = "false" ] && usage_exit
+
 if [ ! -e $dir ]; then
 	mkdir -p $dir
 else
@@ -102,12 +121,12 @@ else
 	exit 1
 fi
 
-case $1 in
-	bin) binRules $dir `basename $dir`
+case $mode in
+	bin) binRules $dir $name
 		;;
-	lib) libRules $dir `basename $dir`
+	lib) libRules $dir $name
 		;;
-	test) testRules $dir `basename $dir`
+	test) testRules $dir $name
 		;;
 	*) usage_exit
 		;;
