@@ -79,15 +79,15 @@ Makefileにセットアップ用のシェルスクリプトを呼び出すコマ
 
 ### mkRules
 
-ソースツリーに新たにサブディレクトリを追加する時に実行します。詳細は後述。
+ソースツリーにサブディレクトリを追加する際に実行します。詳細は後述。
 
 例:
 
-	./mkRules -b sample   #Rules.mkを含むsampleという名前のサブディレクトリをbinディレクトリ以下に生成
+	./mkRules -b foo
 
-	./mkRules -l add   #Rules.mkを含むaddという名前のサブディレクトリをlibディレクトリ以下に生成
+	./mkRules -l bar
 
-	./mkRules -t add   #Rules.mkを含むaddという名前のサブディレクトリをtestディレクトリ以下に生成
+	./mkRules -t hoge
 
 ## ソースツリーの管理
 
