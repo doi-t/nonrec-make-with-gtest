@@ -17,6 +17,7 @@ non-recursive make with googletest for TDD
 
 ```sh
 git clone https://github.com/doi-t/nonrec-make-with-gtest.git
+cd nonrec-make-with-gtest/
 make setup_gtest
 make test
 make
@@ -63,6 +64,12 @@ googletestをセットアップしてない場合は、先に`make setup_gtest`�
 依存関係ファイルや、生成された実行バイナリやライブラリを全て削除します。
 
 	make clean
+
+### make debug
+
+トップレベルMakefileが集約した情報を表示する
+
+	make debug
 
 ### googletest install
 
