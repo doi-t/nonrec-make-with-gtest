@@ -16,6 +16,7 @@ non-recursive make with googletest for TDD
 ## とりあえずサンプルのビルドを試してみる
 
 ```sh
+git clone https://github.com/doi-t/nonrec-make-with-gtest.git
 make setup_gtest
 make test
 make
