@@ -15,12 +15,20 @@ non-recursive make with googletest for TDD
 
 ## とりあえずサンプルのビルドを試してみる
 
+touchコマンドでソースファイルのビルドプロセスを観察してみると、関連するコードのコンパイルのみが行われるはずです。
+
+動作は現状、Debian wheezyとUbuntu 12.04で確認．
+
 ```sh
 git clone https://github.com/doi-t/nonrec-make-with-gtest.git
 cd nonrec-make-with-gtest/
 make setup_gtest
-make test
-make
+make test							#テストのコンパイルと実行
+make								#実行バイナリのビルド
+touch ./test/add/add_unittest.cc	#テストコードを更新
+make test							#テストコードのコンパイルのみ実行してテスト実行
+touch ./lib/add/add.cc				#テスト対象のモジュールを更新
+make test							#ライブラリとテストコードのコンパイルが行われてテスト実行
 ```
 
 ## 使い方
@@ -29,7 +37,7 @@ make
 
 1. mkRulesスクリプトで必要なサブディレクトリを生成します。bin, lib, test以下には複数のサブディレクトを生成できます。
 
-2. ソースツリーのサブディレクトリを管理するRules.mkに必要な設定(後述)を行います。依存ライブラリやテスト対象ライブラリの指定にはlib/から始まるパスを指定するように注意して下さい。
+2. ソースツリーのサブディレクトリを管理するRules.mkに必要な設定(後述)を行います。
 
 3. ソースを.ccファイルとして、ヘッダを.hファイルとして作成します。各サブディレクトリ内部に、複数の.ccファイルがあっても構いません。これらはビルド時にサブディレクトリ単位で１つのライブラリや実行バイナリにまとめられます。
 
@@ -59,6 +67,18 @@ googletestをセットアップしてない場合は、先に`make setup_gtest`�
 
 	make test
 
+### mkRules
+
+ソースツリーにサブディレクトリを追加する際に実行するシェルスクリプト。詳細は後述。
+
+例:
+
+	./mkRules -b foo
+
+	./mkRules -l bar
+
+	./mkRules -t hoge
+
 ### make clean
 
 依存関係ファイルや、生成された実行バイナリやライブラリを全て削除します。
@@ -85,27 +105,13 @@ Makefileにセットアップ用のシェルスクリプトを呼び出すコマ
 
 	make remove_gtest
 
-### mkRules
-
-ソースツリーにサブディレクトリを追加する際に実行します。詳細は後述。
-
-例:
-
-	./mkRules -b foo
-
-	./mkRules -l bar
-
-	./mkRules -t hoge
-
 ## ソースツリーの管理
-
-git cloneしてきた直後はセットアップ用のスクリプト群とサンプルコードが入っています。
 
 サンプルコードが不要なら、ソースツリーの最小構成をセットアップ用のシェルスクリプトで再構築して下さい。
 
 	./setup
 
-bin, lib, testの３つのディレクトリを全て削除して、再度生成します。
+bin, lib, testの３つのディレクトリを**全て削除**して、再度生成します。
 
 生成されるディレクトリはそれぞれ、実行バイナリ(bin), ライブラリ(lib), テスト(test)に対応します。
 
@@ -165,7 +171,7 @@ nonrec-make-with-gtest/
 `-- test
 	`-- add
 	    |-- Rules.mk
-	    `-- test_add.cc
+	    `-- add_unittest.cc
 ```
 
 ### ソースツリー構成
@@ -192,10 +198,10 @@ nonrec-make-with-gtest/
 `-- test
     `-- add   <--- testディレクトリ以下の各サブディレクトリが1つのテスト用バイナリに対応
         |-- Rules.mk    <--- デフォルトでtest_addというテスト用バイナリが生成されるように設定されています。
-        `-- test_add.cc
+        `-- add_unittest.cc
 ```
 
-#### 生成されたlib/add/Rules.mkの管理
+#### ライブラリ(lib)用のRules.mkの管理
 
 Rules.mkにはデフォルトでライブラリ名としてlibadd.aという名前が設定されています。必要に応じて変更して下さい。
 
@@ -208,7 +214,7 @@ local_src := $(wildcard $(subdirectory)/*.cc)
 $(eval $(call make-library, $(subdirectory)/$(library-name), $(local_src)))
 ```
 
-#### 生成されたtest/add/Rules.mkの管理
+#### テスト(test)用のRules.mkの管理
 
 Rules.mkにはデフォルトで生成されるテスト用バイナリの名前が設定されています。
 
@@ -224,7 +230,7 @@ local_src := $(wildcard $(subdirectory)/*.cc)
 $(eval $(call make-test, $(subdirectory)/$(local_test_suites), $(local_src), $(target_libraries)))
 ```
 
-#### 生成されたbin/sample/Rules.mkの管理
+#### 実行バイナリ(bin)用のRules.mkの管理
 
 Rules.mkにはデフォルトで生成される実行バイナリの名前が設定されています。
 
