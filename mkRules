@@ -26,7 +26,7 @@ template_src(){
 local path="$1/$2"
 local name="$2"
 cat > "$path.cc" <<- EOF
-	#include "$name.h"
+	#include "$name/$name.h"
 EOF
 }
 
@@ -35,7 +35,7 @@ local path="$1/$2"
 local name="$2"
 cat > "${path}_unittest.cc" <<- EOF
 	#include "gtest/gtest.h"
-	#include "$name.h"
+	#include "$name/$name.h"
 EOF
 }
 
