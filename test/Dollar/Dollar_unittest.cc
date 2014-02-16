@@ -3,7 +3,7 @@
 
 TEST(Dollar, testMultiplication){
 	Money money;
-	Dollar five = money.dollar(5);
+	Money five = money.dollar(5);
 	EXPECT_EQ(Dollar(10), five.times(2));
 	EXPECT_EQ(Dollar(15), five.times(3));
 }

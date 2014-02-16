@@ -12,8 +12,6 @@ protected:
 public:
 	virtual ~Money(){}
 	bool operator==(const Money& other) const {
-		std::cout << typeid(*this).name() << "\n";
-		std::cout << typeid(other).name() << "\n";
 		return (this->amount == other.amount && typeid(*this).name() == typeid(other).name());
 	}
 	Dollar dollar(int);
