@@ -8,6 +8,7 @@ class Money {
 protected:
 	int amount;
 public:
+	virtual ~Money(){}
 	bool operator==(const Money& other) const {
 		std::cout << "*this == " << typeid(*this).name() << "\n";
 		std::cout << "other == " << typeid(other).name() << "\n";
