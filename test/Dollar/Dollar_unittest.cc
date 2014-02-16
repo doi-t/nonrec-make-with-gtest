@@ -11,3 +11,10 @@ TEST(Dollar, testEquality){
 	EXPECT_TRUE(Dollar(5) == Dollar(5));
 	EXPECT_FALSE(Dollar(5) == (Dollar(6)));
 }
+
+TEST(Dollar, testFrancMultiplication){
+	Franc five = Franc(5);
+	EXPECT_EQ(Franc(10), five.times(2));
+	EXPECT_EQ(Franc(15), five.times(3));
+}
+
