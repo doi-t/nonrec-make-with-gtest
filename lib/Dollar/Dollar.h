@@ -1,12 +1,17 @@
 #ifndef ___Dollar	
 #define ___Dollar
 
+#include <iostream>
+#include <typeinfo>
+
 class Money {
 protected:
 	int amount;
 public:
 	bool operator==(const Money& other) const {
-		return this->amount == other.amount;
+		std::cout << "*this == " << typeid(*this).name() << "\n";
+		std::cout << "other == " << typeid(other).name() << "\n";
+		return (this->amount == other.amount && typeid(*this) == typeid(other));
 	}
 };
 
