@@ -8,3 +8,7 @@ TEST(Dollar, testMultiplication){
 	product = five.times(3);
 	EXPECT_EQ(15, product.amount);
 }
+
+TEST(Dollar, testEquality){
+	EXPECT_TRUE(Dollar(5).equals(Dollar(5)));
+}

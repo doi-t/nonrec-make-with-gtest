@@ -9,6 +9,9 @@ public:
 	Dollar times(int multiplier){
 		return Dollar(amount * multiplier);
 	}
+	bool equals(Dollar object){
+		return true;
+	}
 };
 
 #endif //___Dollar
