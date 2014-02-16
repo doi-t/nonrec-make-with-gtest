@@ -20,8 +20,6 @@ public:
 };
 
 class Franc : public Money {
-private:
-	int amount;
 public:
 	Franc(int amount){ this->amount = amount; }
 
