@@ -9,9 +9,8 @@ public:
 	Dollar times(int multiplier){
 		return Dollar(amount * multiplier);
 	}
-	bool equals(Dollar object){
-		Dollar dollar = object;
-		return amount == dollar.amount;
+	bool operator==(const Dollar& other) const {
+		return this->amount == other.amount;
 	}
 };
 
