@@ -5,7 +5,7 @@ class Dollar {
 public:
 	Dollar(int amount){};
 
-	int amount = 10;
+	int amount = 5*2;
 	void times(int);
 };
 
