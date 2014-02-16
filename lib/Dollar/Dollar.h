@@ -3,7 +3,7 @@
 
 class Dollar {
 public:
-	Dollar(int amount){};
+	Dollar(int amount){ this->amount = amount; }
 
 	int amount;
 	void times(int multiplier){ amount = 5*2; }
