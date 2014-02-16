@@ -5,7 +5,7 @@ class Money {
 
 };
 
-class Dollar {
+class Dollar : public Money {
 private:
 	int amount;
 public:
