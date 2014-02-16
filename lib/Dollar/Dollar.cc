@@ -1,7 +1,6 @@
 #include "Dollar/Dollar.h"
 
-/*
-void
-Dollar::times(int multiplier){
+Dollar 
+Money::dollar(int amount){
+	return Dollar(amount);
 }
-*/

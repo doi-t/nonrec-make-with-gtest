@@ -4,6 +4,8 @@
 #include <iostream>
 #include <typeinfo>
 
+class Dollar;
+
 class Money {
 protected:
 	int amount;
@@ -12,6 +14,7 @@ public:
 	bool operator==(const Money& other) const {
 		return (this->amount == other.amount && typeid(*this) == typeid(other));
 	}
+	Dollar dollar(int);
 };
 
 class Dollar : public Money {
