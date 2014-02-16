@@ -19,7 +19,7 @@ public:
 	}
 };
 
-class Franc {
+class Franc : public Money {
 private:
 	int amount;
 public:
