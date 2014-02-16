@@ -3,5 +3,8 @@
 amountのプライベート化
 * Dollarの副作用
 Moneyの丸め処理
-equals()
+* equals()
 hashCode()
+nullとの等価性
+オブジェクトとの等価性
+

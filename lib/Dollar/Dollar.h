@@ -10,7 +10,8 @@ public:
 		return Dollar(amount * multiplier);
 	}
 	bool equals(Dollar object){
-		return true;
+		Dollar dollar = object;
+		return amount == dollar.amount;
 	}
 };
 
