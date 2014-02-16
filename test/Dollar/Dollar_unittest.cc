@@ -4,9 +4,9 @@
 TEST(Dollar, testMultiplication){
 	Dollar five = Dollar(5);
 	Dollar product = five.times(2);
-	EXPECT_EQ(10, product.amount);
+	EXPECT_EQ(Dollar(10), product);
 	product = five.times(3);
-	EXPECT_EQ(15, product.amount);
+	EXPECT_EQ(Dollar(15), product);
 }
 
 TEST(Dollar, testEquality){
