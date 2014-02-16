@@ -7,8 +7,7 @@ public:
 
 	int amount;
 	Dollar times(int multiplier){
-		amount *= multiplier;
-		return 0;
+		return Dollar(amount * multiplier);
 	}
 };
 
