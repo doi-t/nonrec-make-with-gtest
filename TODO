@@ -9,5 +9,6 @@ nullとの等価性
 オブジェクトとの等価性
 * 5 CHF * 2 = 10 CHF
 DollarとFrancの重複
-equalsの一般化(等価演算子==)
+* equalsの一般化(等価演算子==)
 timesの一般化
+FrancとDollarの比較
