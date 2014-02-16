@@ -4,6 +4,10 @@
 class Money {
 protected:
 	int amount;
+public:
+	bool operator==(const Money& other) const {
+		return this->amount == other.amount;
+	}
 };
 
 class Dollar : public Money {
@@ -12,10 +16,6 @@ public:
 
 	Dollar times(int multiplier){
 		return Dollar(amount * multiplier);
-	}
-
-	bool operator==(const Dollar& other) const {
-		return this->amount == other.amount;
 	}
 };
 
