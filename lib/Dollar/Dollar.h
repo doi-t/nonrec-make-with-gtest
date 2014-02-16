@@ -1,6 +1,10 @@
 #ifndef ___Dollar	
 #define ___Dollar
 
+class Money {
+
+};
+
 class Dollar {
 private:
 	int amount;
