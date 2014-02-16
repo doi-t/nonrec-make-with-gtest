@@ -2,9 +2,9 @@
 #include "Dollar/Dollar.h"
 
 TEST(Dollar, testMultiplication){
-	Dollar five(5);
-	five.times(2);
-	EXPECT_EQ(10, five.amount);
-	five.times(3);
-	EXPECT_EQ(15, five.amount);
+	Dollar five = Dollar(5);
+	Dollar product = five.times(2);
+	EXPECT_EQ(10, product.amount);
+	product = five.times(3);
+	EXPECT_EQ(15, product.amount);
 }

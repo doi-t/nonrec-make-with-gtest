@@ -6,7 +6,10 @@ public:
 	Dollar(int amount){ this->amount = amount; }
 
 	int amount;
-	void times(int multiplier){ amount *= multiplier; }
+	Dollar times(int multiplier){
+		amount *= multiplier;
+		return 0;
+	}
 };
 
 #endif //___Dollar
