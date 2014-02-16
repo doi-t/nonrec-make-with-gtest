@@ -2,12 +2,11 @@
 #define ___Dollar
 
 class Money {
-
+protected:
+	int amount;
 };
 
 class Dollar : public Money {
-private:
-	int amount;
 public:
 	Dollar(int amount){ this->amount = amount; }
 
