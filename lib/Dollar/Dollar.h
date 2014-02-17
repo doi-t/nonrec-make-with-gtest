@@ -14,7 +14,7 @@ public:
 	bool operator==(const Money& other) const {
 		return (this->amount == other.amount && typeid(*this).name() == typeid(other).name());
 	}
-	Dollar dollar(int);
+	Dollar *dollar(int);
 };
 
 class Dollar : public Money {

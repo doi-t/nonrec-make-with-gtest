@@ -1,6 +1,6 @@
 #include "Dollar/Dollar.h"
 
-Dollar 
+Dollar *
 Money::dollar(int amount){
-	return Dollar(amount);
+	return new Dollar(amount);
 }
